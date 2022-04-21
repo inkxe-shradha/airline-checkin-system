@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  BASE_URL: 'http://localhost:/' + process.env["PORT"] || 3001 + '/',
+  BASE_URL: 'http://localhost:3001/',
 };
 
 /*
