@@ -1,0 +1,127 @@
+<div
+  class="mt20"
+  fxLayout="row"
+  fxLayoutAlign="space-between stretch"
+  fxLayout.lt-md="column"
+  fxLayoutGap="20px"
+>
+  <mat-card fxFlex fxLayout="column">
+    <mat-card-title class="text-center">
+      <h1>Welcome To Airline BNB</h1>
+    </mat-card-title>
+    <mat-divider [inset]="true"></mat-divider>
+    <mat-card-content class="text-center mt-3">
+      <p>
+        Hey <strong>{{ currentUser?.name }}</strong
+        >! Thanks for sign in. You got the
+        <span
+          class="badge badge-pill bg-gradient"
+          [ngClass]="currentUser?.isAdmin ? 'bg-success' : 'bg-danger'"
+        >
+          {{ currentUser?.isAdmin ? "Admin" : "User" }}
+        </span>
+        Access.
+      </p>
+      <p class="text-lg-center">
+        Please continue the selection for managing flights.
+        <br />
+        Please read the <font class="text-info">Read.md</font> for more details
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div
+  *ngIf="currentUser?.isAdmin"
+  fxLayout="row wrap"
+  fxLayout.xs="column"
+  fxLayoutAlign="space-between stretch"
+  fxLayoutGap="20px"
+  fxLayoutGap.xs="0"
+  class="mt-3"
+>
+  <mat-card fxFlex fxLayout="column">
+    <mat-card-title class="text-center"> Select the Flight! </mat-card-title>
+    <mat-card-subtitle class="text-center text-warning font-weight-bold">
+      Please select the Flight Which you want to Filter!
+    </mat-card-subtitle>
+    <mat-divider [inset]="true"></mat-divider>
+    <mat-card-content class="text-center mt-3">
+      <div class="card bg-dark shadow-lg">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <mat-button-toggle-group
+                name="flightRecords"
+                aria-label="Available Flight Records"
+              >
+                <mat-button-toggle
+                  *ngFor="let flight of flightList"
+                  [value]="flight"
+                  (click)="onFlightSelected(flight.id)"
+                >
+                  <mat-icon class="text-white"> flight </mat-icon>
+                  <span class="text-white">{{ flight.name }}</span>
+                </mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="mt-3 flight-list"
+        fxLayout="row wrap"
+        fxLayoutAlign="center"
+        fxLayoutGap="20px"
+        [hidden]="!selectedFlight"
+      >
+        <div class="no-margin" fxFlex="24" fxFlex.lt-lg="100">
+          <mat-card class="success">
+            <mat-card-header>
+              <div mat-card-avatar>
+                <mat-icon class="icon-lg">airline_seat_recline_normal</mat-icon>
+              </div>
+              <mat-card-title> Passengers </mat-card-title>
+              <mat-card-subtitle
+                >For Flight {{ getSelectedFlight() }}</mat-card-subtitle
+              >
+            </mat-card-header>
+            <mat-card-actions>
+              <button
+                mat-button
+                class="float-right"
+                [routerLink]="['/passenger-list']"
+                [queryParams]="{ param: selectedFlight }"
+              >
+                View Details
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+        <div class="mb10" fxFlex="24" fxFlex.lt-lg="100">
+          <mat-card class="info">
+            <mat-card-header>
+              <div mat-card-avatar>
+                <mat-icon class="icon-lg"> electrical_services </mat-icon>
+              </div>
+              <mat-card-title> Anicillary </mat-card-title>
+              <mat-card-subtitle
+                >For Flight {{ getSelectedFlight() }}</mat-card-subtitle
+              >
+            </mat-card-header>
+            <mat-card-actions>
+              <button
+                mat-button
+                class="float-right"
+                [routerLink]="['/ancillary-list']"
+                [queryParams]="{ param: selectedFlight }"
+              >
+                View Details
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

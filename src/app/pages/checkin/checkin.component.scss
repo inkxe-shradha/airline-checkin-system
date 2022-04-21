@@ -1,0 +1,22 @@
+@import 'src/scss/__variables.scss';
+
+.mat-button-toggle-checked {
+  background-color: $bg-indigo;
+}
+
+
+
+::ng-deep mat-checkbox .mat-checkbox-label {
+  display: flex !important;
+  align-items: center;
+}
+
+
+::ng-deep mat-card {
+
+  @media screen and (max-width: 768px) {
+    .text-custom-start {
+      text-align: start !important;
+    }
+  }
+}

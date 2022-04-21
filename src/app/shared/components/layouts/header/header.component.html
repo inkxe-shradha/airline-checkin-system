@@ -1,0 +1,29 @@
+<mat-toolbar color="primary" class="fix-nav">
+  <button
+    type="button"
+    mat-icon-button
+    class="visible-md"
+    *ngIf="handsetStatus && currentUser"
+    (click)="toggleSidebar()"
+  >
+    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+  </button>
+  <div class="nav-brand">Airline BNB</div>
+  <span class="nav-spacer"></span>
+  <ng-container *ngIf="currentUser">
+    <button class="hidden-sm" mat-icon-button [matMenuTriggerFor]="profile">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #profile="matMenu" [overlapTrigger]="false">
+      <button mat-menu-item>
+        <mat-icon>person</mat-icon>
+        <span>
+          {{ currentUser?.name }}
+        </span>
+      </button>
+    </mat-menu>
+    <button mat-icon-button (click)="handelLogOut()">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+  </ng-container>
+</mat-toolbar>

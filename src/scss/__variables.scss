@@ -1,0 +1,14 @@
+@use '@angular/material'as mat;
+
+@import "@angular/material/theming";
+
+@include mat.core();
+
+@include mat-core();
+
+$dark-form: #3a3838;
+$white: #fff;
+$google-blue: #4285f4;
+$button-active-blue: #1669F2;
+$bg-indigo: mat-color(mat-palette($mat-indigo));
+$light-indigo: rgba(132, 131, 131, 0.488);

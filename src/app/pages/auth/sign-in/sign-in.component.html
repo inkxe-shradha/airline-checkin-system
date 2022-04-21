@@ -1,0 +1,98 @@
+<div class="login-page">
+  <div class="content px20">
+    <form class="login-form" #form="ngForm" (ngSubmit)="onLogin(form)">
+      <div class="text-center">
+        <h2 class="app-heading">AirBnB</h2>
+      </div>
+      <div fxLayout="row">
+        <div fxFlexFill>
+          <div
+            class="alert alert-danger"
+            role="alert"
+            *ngIf="errorState | async"
+          >
+            {{ errorState | async }}
+          </div>
+          <mat-form-field class="w-100">
+            <input
+              matInput
+              placeholder="Email"
+              name="email"
+              id="email"
+              #email="ngModel"
+              autocomplete="off"
+              type="email"
+              ngModel
+              required
+              email
+              [errorStateMatcher]="errorHandler"
+              placeholder="Enter your email address"
+            />
+            <!-- Validation schema -->
+            <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
+              <span *ngIf="email.errors?.['required']">Email is required</span>
+              <span *ngIf="email.errors?.['email'] || email.errors?.['pattern']"
+                >Invalid email address</span
+              >
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="w-100">
+            <input
+              matInput
+              type="password"
+              name="password"
+              #password="ngModel"
+              id="password"
+              [minlength]="6"
+              required
+              placeholder="*******"
+              [errorStateMatcher]="errorHandler"
+              ngModel
+              placeholder="Password"
+            />
+            <!-- Validation schema -->
+            <mat-error
+              *ngIf="password.invalid && (password.dirty || password.touched)"
+            >
+              <span *ngIf="password.errors?.['required']"
+                >Password is required</span
+              >
+              <span *ngIf="password.errors?.['minlength']">
+                Password must be at least 6 length charecters
+              </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div fxLayout="row" class="mt-1">
+        <div fxFlexFill>
+          <button
+            type="submit"
+            mat-raised-button
+            color="accent"
+            id="submit"
+            [class.spinner]="dataLoading | async"
+            class="w-100"
+            [disabled]="form.invalid"
+          >
+            Login
+          </button>
+
+          <div
+            class="google-btn cursor-pointer mt-1"
+            (click)="loginWithGoogle()"
+          >
+            <div class="google-icon-wrapper">
+              <img
+                class="google-icon"
+                src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+              />
+            </div>
+            <p class="btn-text"><b>Sign in with google</b></p>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

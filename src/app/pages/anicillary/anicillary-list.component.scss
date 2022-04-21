@@ -1,0 +1,30 @@
+.table {
+
+  th,
+  td {
+    padding: 0.5rem 0.5rem;
+    border-bottom-width: 1px;
+  }
+
+  th {
+    background-color: #000;
+    color: #fff;
+    font-weight: bolder;
+    line-height: 2.5rem;
+    letter-spacing: 0.01071em;
+    padding: 16px;
+  }
+
+  //   target last child of table cell
+  th:last-child {
+    text-align: center
+  }
+
+  td {
+    line-height: 2.43;
+    letter-spacing: 0.01071em;
+    display: table-cell;
+    vertical-align: middle;
+    padding: 16px
+  }
+}

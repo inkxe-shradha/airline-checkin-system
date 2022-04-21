@@ -1,0 +1,76 @@
+<ng-container *ngIf="data.isEdit; else elseTemplate">
+  <h2 mat-dialog-title>Edit the passenger form</h2>
+</ng-container>
+<ng-template #elseTemplate>
+  <h2 mat-dialog-title>Add the passenger form</h2>
+</ng-template>
+<form [formGroup]="anicillaryForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content class="mat-typography">
+    <!-- Service Name -->
+    <div class="row">
+      <div class="col-12">
+        <div fxLayout fxLayoutAlign="center center">
+          <mat-form-field class="w-100">
+            <input
+              matInput
+              type="text"
+              formControlName="name"
+              placeholder="Service Name"
+              required="true"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flight List -->
+    <div class="row">
+      <div class="col-12">
+        <div fxLayout fxLayoutAlign="center center">
+          <mat-form-field class="w-100" color="accent">
+            <mat-label>Flight List</mat-label>
+            <mat-select
+              formControlName="flight"
+              required="true"
+              readonly="true"
+            >
+              <mat-option *ngFor="let flight of flightList" [value]="flight.id">
+                {{ flight.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service Type -->
+    <div class="row">
+      <div class="col-12">
+        <div fxLayout fxLayoutAlign="center center">
+          <mat-form-field class="w-100" color="accent">
+            <mat-label>Service Type</mat-label>
+            <mat-select formControlName="itemType" required>
+              <mat-option
+                *ngFor="let service of serviceItemCategory"
+                [value]="service.id"
+              >
+                {{ service.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" mat-dialog-close>Cancel</button>
+    <button
+      mat-raised-button
+      type="submit"
+      color="primary"
+      [disabled]="form.invalid"
+    >
+      {{ data.isEdit ? "Update" : "Add" }}
+    </button>
+  </mat-dialog-actions>
+</form>

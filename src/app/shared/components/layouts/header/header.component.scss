@@ -1,0 +1,25 @@
+// Allowed to styles the shadow dom
+:host {
+  display: block;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-brand {
+  text-align: center;
+}
+
+
+.topnav-icon {
+  text-decoration: none;
+  display: flex;
+  color: #fff;
+}
+
+
+.nav-spacer {
+  flex: 1 1 auto;
+}

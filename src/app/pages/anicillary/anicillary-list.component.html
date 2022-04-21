@@ -1,0 +1,148 @@
+<mat-card class="mat-elevation-z8">
+  <mat-card-title>
+    <div class="d-flex justify-content-between">
+      <div class="mr-auto flex-1">
+        <h1>Anicillary List ({{ activeFlightList }})</h1>
+      </div>
+      <div class="ml-auto">
+        <button
+          mat-mini-fab
+          #tooltip="matTooltip"
+          matTooltip="Add the Anicillary"
+          aria-label="This will trigger the adding Anicillary to the systems"
+          color="primary"
+          class="me-2"
+          (click)="openAddAnicillaryService()"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+        <!-- Filter Button -->
+        <button
+          mat-mini-fab
+          color="accent"
+          #tooltip="matTooltip"
+          matTooltip="Filter the Mandatory list"
+          aria-label="We filter the anicillary list"
+          class="me-2"
+          [matMenuTriggerFor]="filterAns"
+        >
+          <mat-icon>filter_list</mat-icon>
+        </button>
+        <!-- Filter Menu -->
+        <mat-menu #filterAns="matMenu" class="overflow-hidden">
+          <div class="margin-switch-custom">
+            <div class="font-weight-bold">
+              <h3>Filter Fields:</h3>
+            </div>
+
+            <!-- Dropdown -->
+            <mat-form-field
+              class="w-100 m-2"
+              (click)="$event.stopPropagation()"
+            >
+              <mat-label>Select Service</mat-label>
+              <mat-select (selectionChange)="filterByServiceColumn($event)">
+                <mat-option value="">All</mat-option>
+                <mat-option
+                  *ngFor="let ans of this.serviceCategoriesList"
+                  [value]="ans.id"
+                >
+                  {{ ans.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-menu>
+        <button
+          mat-mini-fab
+          color="default"
+          #tooltip="matTooltip"
+          matTooltip="Back to Dashboard"
+          aria-label="We get back to the previous page"
+          [routerLink]="['/dashboard']"
+        >
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card-title>
+
+  <mat-card-content>
+    <div class="row">
+      <div class="col-12">
+        <div fxLayout fxLayoutAlign="center center">
+          <mat-form-field fxFlex="40%">
+            <input
+              matInput
+              type="text"
+              (keyup)="doFilter($event)"
+              placeholder="Find By Service Name"
+            />
+          </mat-form-field>
+        </div>
+        <div class="table-responsive">
+          <table mat-table class="table" [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+              <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="flight">
+              <th mat-header-cell *matHeaderCellDef>Flight</th>
+              <td mat-cell *matCellDef="let element">
+                {{ getFlight(element.flight) }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="service">
+              <th mat-header-cell *matHeaderCellDef>Service</th>
+              <td mat-cell *matCellDef="let element">
+                {{ getService(element.itemType) }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef>Action</th>
+              <td mat-cell *matCellDef="let element" class="text-center">
+                <button
+                  mat-icon-button
+                  color="primary"
+                  (click)="handelEdit(element.id)"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="warn"
+                  (click)="handelDelete(element.id)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+            <tr *matNoDataRow="">
+              <td
+                style="text-align: center"
+                [attr.colspan]="displayColumns.length"
+              >
+                <strong class="text-white-50">No data found</strong>
+              </td>
+            </tr>
+            <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+          </table>
+          <mat-paginator
+            [pageSize]="10"
+            [pageSizeOptions]="[10, 20, 50, 100, 200]"
+            [hidden]="!dataSource.data.length"
+          >
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+<app-progress-spinner
+  [diameter]="40"
+  *ngIf="isLoadingState | async"
+></app-progress-spinner>

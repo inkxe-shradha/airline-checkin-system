@@ -1,0 +1,122 @@
+@import 'src/scss/__variables.scss';
+
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 100PX);
+  position: relative;
+
+  .content {
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .app-heading {
+      margin-top: 0px;
+      padding-bottom: 10px;
+      font-size: 32px;
+    }
+
+    .login-form {
+      padding: 40px;
+      background-color: $dark-form;
+      border-radius: 5px;
+      max-width: 400px;
+      box-shadow: 0px 0px 30px rgb(28, 27, 27);
+    }
+
+    input:-webkit-autofill {
+      box-shadow: 0 0 0 30px rgb(28, 27, 27) inset;
+      -webkit-box-shadow: 0 0 0 30px rgb(28, 27, 27) inset;
+    }
+  }
+
+  &:after {
+    content: '';
+    background: rgb(56, 55, 55);
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 50%;
+    right: 0;
+  }
+
+  &:before {
+    content: '';
+    background: $bg-indigo;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+.google-btn {
+  width: 184px;
+  height: 42px;
+  background-color: $google-blue;
+  border-radius: 2px;
+  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .25);
+  margin: auto;
+
+  .google-icon-wrapper {
+    position: absolute;
+    margin-top: 1px;
+    margin-left: 1px;
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    background-color: $white;
+  }
+
+  .google-icon {
+    position: absolute;
+    margin-top: 11px;
+    margin-left: 11px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .btn-text {
+    float: right;
+    margin: 11px 11px 0 0;
+    color: $white;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    font-family: "Roboto";
+  }
+
+  &:hover {
+    box-shadow: 0 0 6px $google-blue;
+  }
+
+  &:active {
+    background: $button-active-blue;
+  }
+}
+
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-top-color: #000000;
+  animation: spinner .8s linear infinite;
+}

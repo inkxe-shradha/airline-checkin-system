@@ -1,0 +1,155 @@
+<ng-container *ngIf="data.isEdit; else elseTemplate">
+  <h2 mat-dialog-title>Edit the passenger form</h2>
+</ng-container>
+<ng-template #elseTemplate>
+  <h2 mat-dialog-title>Add the passenger form</h2>
+</ng-template>
+<form [formGroup]="passengerForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content class="mat-typography">
+    <!-- Name Filed -->
+    <div class="row">
+      <div class="col-12">
+        <div fxLayout fxLayoutAlign="center center">
+          <mat-form-field class="w-100">
+            <input
+              matInput
+              type="text"
+              formControlName="name"
+              placeholder="Name"
+              required="true"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <!-- Passport Field -->
+    <div class="row">
+      <div class="col-12">
+        <div fxLayout fxLayoutAlign="center center">
+          <mat-form-field class="w-100">
+            <input
+              matInput
+              type="text"
+              formControlName="passport"
+              placeholder="Passport"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <!-- Date Of Birth -->
+    <div class="row">
+      <div class="col-12">
+        <div fxLayout fxLayoutAlign="center center">
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Choose a date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="dob"
+              placeholder="DOB"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flight List -->
+    <div class="row">
+      <div class="col-12">
+        <div fxLayout fxLayoutAlign="center center">
+          <mat-form-field class="w-100" color="accent">
+            <mat-label>Flight List</mat-label>
+            <mat-select formControlName="flight">
+              <mat-option *ngFor="let flight of flightList" [value]="flight.id">
+                {{ flight.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seat Number -->
+    <div class="row">
+      <div class="col-12">
+        <div fxLayout fxLayoutAlign="center center">
+          <mat-form-field class="w-100" color="accent">
+            <mat-label>Availed Seats</mat-label>
+            <mat-select formControlName="seat_No">
+              <mat-option
+                [disabled]="isOptionEnabled(seat)"
+                *ngFor="let seat of availableSeats"
+                [value]="seat"
+              >
+                {{ seat }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <!-- External Checks -->
+    <div class="row">
+      <div class="col-12">
+        <div fxLayout fxLayoutGap="10" fxLayoutAlign="center center">
+          <div fxFlex="33">
+            <mat-slide-toggle class="w-100 m-2" formControlName="isWheelChair">
+              Wheelchair
+            </mat-slide-toggle>
+          </div>
+          <div fxFlex="33">
+            <mat-slide-toggle class="w-100 m-2" formControlName="isInfant">
+              Infant
+            </mat-slide-toggle>
+          </div>
+          <div fxFlex="33">
+            <mat-slide-toggle class="w-100 m-2" formControlName="isSpecialMeal">
+              Special Meal
+            </mat-slide-toggle>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Address Field -->
+    <div class="row">
+      <div class="col-12">
+        <div fxLayout fxLayoutAlign="center center">
+          <mat-form-field class="w-100">
+            <textarea
+              matInput
+              rows="4"
+              type="text"
+              formControlName="address"
+              placeholder="Address"
+            ></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" mat-dialog-close>Cancel</button>
+    <button
+      mat-raised-button
+      type="submit"
+      color="primary"
+      [disabled]="form.invalid"
+    >
+      {{ data.isEdit ? "Update" : "Add" }}
+    </button>
+  </mat-dialog-actions>
+</form>
+
+<!-- Copyright 2022 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at https://angular.io/license -->

@@ -1,1 +1,68 @@
-/* You can add global styles to this file, and also import other style files */
+@import './scss/__variables.scss';
+
+// Light theme
+$light-primary: mat-palette($mat-indigo);
+$light-accent: mat-palette($mat-pink, A200, A100, A400);
+$light-theme: mat-light-theme($light-primary, $light-accent);
+
+// Dark theme
+$dark-primary: mat-palette($mat-indigo);
+$dark-accent: mat-palette($mat-pink, A200, A100, A400);
+$dark-warn: mat-palette($mat-deep-orange);
+$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+@import '@sweetalert2/themes/dark/dark.scss';
+
+@media (prefers-color-scheme: light) {
+  @include angular-material-theme($light-theme);
+}
+
+.dark-theme {
+  @include angular-material-theme($dark-theme);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+
+  // Scrollbar
+  ::-webkit-scrollbar {
+    width: 0.5em;
+  }
+
+  :-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    outline: 1px solid slategrey;
+    box-shadow: inset 0 0 6px $button-active-blue;
+    border-radius: 10px;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+
+.swal2-popup {
+
+  background: #19191a !important;
+  color: #545454 !important;
+  font-family: inherit;
+}
+
+.margin-switch-custom {
+  margin: 15px 15px;
+}
+
+.flex-1 {
+  flex: 1;
+}

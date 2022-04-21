@@ -1,0 +1,25 @@
+<div class="layout-container">
+  <app-header
+    (toggleSidebarEvent)="drawer.toggle()"
+    [handsetStatus]="isHandset$ | async"
+    (logOut)="handelLogout()"
+    [currentUser]="userDetails | async"
+  ></app-header>
+  <mat-sidenav-container class="sidenav-container" [style.marginTop.px]="64">
+    <mat-sidenav
+      #drawer
+      class="sidenav mat-elevation-z10"
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false && (isUserAuthenticated | async)"
+    >
+      <app-side-nav [currentUser]="userDetails | async"></app-side-nav>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <main class="main-container container-fluid">
+        <!-- Add Content Here -->
+        <ng-content></ng-content>
+      </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

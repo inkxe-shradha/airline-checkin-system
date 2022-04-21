@@ -1,0 +1,29 @@
+::ng-deep {
+  .check-in-form {
+    mat-list-item .mat-list-item-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    mat-list-item {
+      margin-top: 10px
+    }
+  }
+
+  .form-checkbox {
+    .mat-list-item-content {
+      max-width: 50%;
+      margin: auto;
+      justify-content: space-around !important;
+    }
+  }
+
+  .passenger-action.mat-list-single-selected-option {
+    background-color: rgba(137, 40, 228, 0.205)
+  }
+
+  .passenger-action.mat-list-single-selected-option:focus {
+    background-color: rgba(158, 76, 235, 0.279)
+  }
+}

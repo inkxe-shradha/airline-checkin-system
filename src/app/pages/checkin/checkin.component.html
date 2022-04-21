@@ -1,0 +1,100 @@
+<div
+  fxLayout="row wrap"
+  fxLayout.xs="column"
+  fxLayoutAlign="space-between stretch"
+  fxLayoutGap="20px"
+  fxLayoutGap.xs="0"
+  class="mt-3"
+>
+  <mat-card fxFlex fxLayout="column">
+    <mat-card-title class="text-center my-lg-2">
+      Flight Records
+    </mat-card-title>
+    <mat-divider [inset]="true" class="mt-2"></mat-divider>
+    <mat-card-content class="text-center mt-3">
+      <div class="card bg-dark shadow-lg">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <mat-button-toggle-group
+                name="flightRecords"
+                color="primary"
+                aria-label="Available Flight Records"
+              >
+                <mat-button-toggle
+                  *ngFor="let flight of flightList"
+                  [value]="flight"
+                  (click)="onFlightSelected(flight.id)"
+                >
+                  <mat-icon class="text-white"> flight </mat-icon>
+                  <span class="text-white">{{ flight.name }}</span>
+                </mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card bg-dark mt-2 shadow-lg">
+        <div class="card-header">
+          <div class="card-title">
+            <h2>Filter By</h2>
+          </div>
+          <div class="card-body">
+            <div fxLayout="row wrap" fxLayoutAlign="center">
+              <div fxFlex="25%" class="text-custom-start" fxFlex.lt-lg="50%">
+                <mat-checkbox
+                  name="isWheelChair"
+                  (change)="handelGlobalFilter($event)"
+                  class="filter-box"
+                >
+                  <mat-icon>wheelchair_pickup</mat-icon>
+                  <span class="ms-1 badge bg-gradient">Wheelchair</span>
+                </mat-checkbox>
+              </div>
+              <div fxFlex="25%" class="text-custom-start" fxFlex.lt-lg="50%">
+                <mat-checkbox
+                  name="isInfant"
+                  (change)="handelGlobalFilter($event)"
+                  class="filter-box"
+                >
+                  <mat-icon>child_friendly</mat-icon>
+                  <span class="ms-1 badge bg-gradient">Infant</span>
+                </mat-checkbox>
+              </div>
+              <div fxFlex="25%" class="text-custom-start" fxFlex.lt-lg="50%">
+                <mat-checkbox
+                  name="isSpecialMeal"
+                  (change)="handelGlobalFilter($event)"
+                  class="filter-box"
+                >
+                  <mat-icon>brunch_dining</mat-icon>
+                  <span class="ms-1 badge bg-gradient">Meal</span>
+                </mat-checkbox>
+              </div>
+              <div fxFlex="25%" class="text-custom-start" fxFlex.lt-lg="50%">
+                <mat-checkbox
+                  name="checkedIn"
+                  (change)="handelGlobalFilter($event)"
+                  class="filter-box"
+                >
+                  <mat-icon>checklist_rtl</mat-icon>
+                  <span class="ms-1 badge bg-gradient">Checked In</span>
+                </mat-checkbox>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <app-checkin-form
+        *ngIf="selectedFlight"
+        [selectedFlight]="selectedFlight"
+        [passengerList]="passengerList | async"
+        [anicillaryList]="anicillaryList | async"
+        [filterKeys]="globalFilterKeys"
+        (submitUpdatedCheckedIn)="handelFormSubmit($event)"
+      ></app-checkin-form>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<app-progress-spinner *ngIf="isLoading | async"></app-progress-spinner>

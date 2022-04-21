@@ -1,0 +1,225 @@
+<div class="row">
+  <div class="col-md-7">
+    <div class="card bg-dark mt-2 shadow-lg">
+      <div class="card-body">
+        <mat-selection-list #loadedList [multiple]="false" color="primary">
+          <ng-container *ngFor="let item of getFilterPassengerList()">
+            <mat-list-option
+              #tooltip="matTooltip"
+              [matTooltip]="item.name"
+              class="passenger-action"
+              [disabled]="item.flight !== selectedFlight"
+              value="{{ item.id }}"
+              [selected]="item.id === selectedSeat"
+              (click)="selectedLineItem(item)"
+            >
+              <div class="d-flex justify-content-between align-content-center">
+                <div class="fw-bolder">
+                  {{ item.seat }}
+                </div>
+                <div class="icon">
+                  <mat-icon [color]="item.isWheelChair && 'accent'" class="mx-1"
+                    >wheelchair_pickup</mat-icon
+                  >
+                  <mat-icon [color]="item.isInfant && 'accent'" class="mx-1">
+                    child_friendly
+                  </mat-icon>
+                  <mat-icon
+                    [color]="item.isSpecialMeal && 'accent'"
+                    class="mx-1"
+                    >brunch_dining</mat-icon
+                  >
+                  <mat-icon [color]="item.checkedIn && 'accent'" class="mx-1"
+                    >checklist_rtl</mat-icon
+                  >
+                </div>
+              </div>
+            </mat-list-option>
+            <mat-divider></mat-divider>
+          </ng-container>
+        </mat-selection-list>
+        <!-- No data found -->
+        <div
+          *ngIf="!getFilterPassengerList().length"
+          style="height: 40px"
+          class="text-center"
+        >
+          <mat-icon class="text-white">sentiment_dissatisfied</mat-icon>
+          <span class="text-white ms-2" style="vertical-align: super"
+            >No data found</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5">
+    <div class="card bg-dark mt-2 shadow-lg">
+      <div class="card-body">
+        <form
+          (ngSubmit)="onSubmit()"
+          class="check-in-form"
+          [formGroup]="checkedInform"
+        >
+          <mat-list>
+            <mat-list-item>
+              <h3 class="my-auto">Passenger</h3>
+              <div class="btn-group-sm">
+                <button
+                  type="submit"
+                  class="btn btn-sm me-2"
+                  mat-raised-button
+                  [disabled]="!selectedSeat"
+                  color="primary"
+                >
+                  <mat-icon>check</mat-icon>
+                  Save
+                </button>
+                <button
+                  type="reset"
+                  (click)="resetForm()"
+                  class="btn btn-sm"
+                  mat-raised-button
+                  color="warn"
+                  [disabled]="!selectedSeat"
+                >
+                  <mat-icon>clear</mat-icon>
+                  clear
+                </button>
+              </div>
+            </mat-list-item>
+            <mat-divider class="mt-2"></mat-divider>
+
+            <mat-list-item>
+              <h4 class="my-auto">Checked In</h4>
+              <mat-checkbox formControlName="checkedIn"></mat-checkbox>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+
+            <mat-list-item>
+              <h4 class="my-auto">Seat Number</h4>
+              <mat-select formControlName="seat" class="w-50">
+                <mat-option
+                  *ngFor="let seat of seatList"
+                  [disabled]="disabledSeats(seat)"
+                  [value]="seat"
+                >
+                  {{ seat }}
+                </mat-option>
+              </mat-select>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+
+            <mat-list-item>
+              <h4 class="my-auto">Name</h4>
+              <mat-form-field>
+                <input
+                  matInput
+                  formControlName="name"
+                  placeholder="Name"
+                  class="w-100"
+                />
+              </mat-form-field>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+
+            <mat-list-item>
+              <h4 class="my-auto">passport</h4>
+              <mat-form-field>
+                <input
+                  matInput
+                  formControlName="passport"
+                  placeholder="Passport Number"
+                  class="w-100"
+                />
+              </mat-form-field>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+
+            <mat-list-item>
+              <h4 class="my-auto">DOB</h4>
+              <mat-form-field>
+                <input
+                  matInput
+                  formControlName="dob"
+                  placeholder="Date of birth"
+                  class="w-100"
+                />
+              </mat-form-field>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+
+            <mat-list-item>
+              <h4 class="my-auto">Address</h4>
+              <mat-form-field>
+                <input
+                  matInput
+                  formControlName="address"
+                  placeholder="Address"
+                  class="w-100"
+                />
+              </mat-form-field>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+
+            <mat-list-item class="form-checkbox">
+              <mat-checkbox formControlName="isWheelChair">
+                <mat-icon>wheelchair_pickup</mat-icon>
+              </mat-checkbox>
+              <mat-checkbox formControlName="isInfant">
+                <mat-icon>child_friendly</mat-icon>
+              </mat-checkbox>
+              <mat-checkbox formControlName="isSpecialMeal">
+                <mat-icon>brunch_dining</mat-icon>
+              </mat-checkbox>
+            </mat-list-item>
+          </mat-list>
+          <ng-container *ngIf="isAnicillaryForm">
+            <mat-divider></mat-divider>
+            <div class="col-md-12 mt-1">
+              <h4 class="text-center mt-2">Anicillary</h4>
+              <mat-form-field class="w-100" appearance="fill">
+                <mat-label>Select Services</mat-label>
+
+                <mat-chip-list
+                  #chipList
+                  aria-label="Fruit selection"
+                  [disabled]="!selectedSeat"
+                >
+                  <mat-chip
+                    *ngFor="let item of formAncillaryLis"
+                    (removed)="remove(item)"
+                  >
+                    {{ item }}
+                    <button matChipRemove>
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </mat-chip>
+                  <input
+                    placeholder="Enter Services name..."
+                    #serviceInput
+                    formControlName="anicillaryServices"
+                    [matAutocomplete]="auto"
+                    [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  />
+                </mat-chip-list>
+                <mat-autocomplete
+                  #auto="matAutocomplete"
+                  (optionSelected)="selected($event)"
+                >
+                  <mat-option
+                    [disabled]="formAncillaryLis.includes(item.name)"
+                    *ngFor="let item of filteredService | async"
+                    [value]="item.name"
+                  >
+                    {{ item.name }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+          </ng-container>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
