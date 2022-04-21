@@ -1,6 +1,8 @@
 # Introduction
 
-Hey Team, Thanks for being used my code. This is Shradha, Recently Joined the organization. Please excuse anything happened wrongly. Thanks and Regards.
+Hey All, Thanks for checking this out.
+
+Do let me know if you are not able to understand at any point here -> shradhasuman2@gmail.com
 
 # Features asked in the projects
 
